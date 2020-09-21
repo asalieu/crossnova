@@ -6,12 +6,11 @@ import dash_html_components as html
 import dash_core_components as dcc
 import plotly.express as px
 import pandas as pd
-import numpy as np
+import numpy as np 
 from dotenv import load_dotenv
 import psycopg2
 import copy
-import os
-
+import os 
 
 ## define custom CSS
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -28,23 +27,13 @@ server_ip="localhost"
 port="9000"
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets,server=server)  
 
-
-## Import credentials from a secured file and pass into an object 
-user=os.getenv("USERNAME"),
-password=os.getenv("PASSWORD"),
-host=os.getenv("PostgresSQL_ADDRESS"),
-port=os.getenv("PORT"),
-database=os.getenv("DATABASE")
-
-secret = {user,password,host,port,database}
-
 ## Initiate connection to postgrsql database hosted on the cloud  
 try:
-   connection = psycopg2.connect(user=secret.user,
-                                 password=secret.password,
-                                 host=secret.host,
-                                 port=secret.port,
-                                 database=secret.database)
+   connection = psycopg2.connect(user=os.getenv("USERNAME"),
+                                 password=os.getenv("PASSWORD"),
+                                 host=os.getenv("PostgresSQL_ADDRESS"),
+                                 port=os.getenv("PORT"),
+                                 database=os.getenv("DATABASE"))
    cursor = connection.cursor()
    postgreSQL_select_Query = "select car_purchase_price,car_sale_price,car_brand from auto"
 
