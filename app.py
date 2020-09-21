@@ -24,6 +24,8 @@ colors = {
 
 ## setting up the trigger the dash app service 
 server = flask.Flask(__name__)
+server_ip="localhost"
+port="9000"
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets,server=server)  
 
 
@@ -112,4 +114,4 @@ def update_output(selected_value):
         return (selected_value,fig)      
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(host=server_ip,port=port)
