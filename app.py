@@ -111,4 +111,4 @@ def update_output(selected_value):
         return (selected_value,fig)      
 
 if __name__ == '__main__':
-    app.run_server('localhost',9000)
+    app.run_server(debug=True)
