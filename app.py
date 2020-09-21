@@ -6,6 +6,7 @@ import dash_core_components as dcc
 import plotly.express as px
 import pandas as pd
 import numpy as np
+from dotenv import load_dotenv
 import psycopg2
 import copy
 import os
@@ -21,7 +22,9 @@ colors = {
 
 
 ## setting up the trigger the dash app service 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)  
+server = flask.Flask(__name__)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets,server=server)  
+
 
 ## Import credentials from a secured file and pass into an object 
 user=os.getenv("USERNAME"),
@@ -32,10 +35,7 @@ database=os.getenv("DATABASE")
 
 secret = {user,password,host,port,database}
 
-## Initiate connection to postgrsql database hosted on the cloud 
-
-
- 
+## Initiate connection to postgrsql database hosted on the cloud  
 try:
    connection = psycopg2.connect(user=secret.user,
                                  password=secret.password,
@@ -46,7 +46,7 @@ try:
    postgreSQL_select_Query = "select car_purchase_price,car_sale_price,car_brand from auto"
 
    cursor.execute(postgreSQL_select_Query)
-   print("Selecting rows from mobile table using cursor.fetchall")
+   print("Selecting rows from auto table using cursor.fetchall")
    auto_records = cursor.fetchall()    
     
     
