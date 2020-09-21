@@ -1,0 +1,12 @@
+dash
+dash-renderer
+dash_core_components
+dash_html_components
+dash-table
+plotly.express 
+numpy
+pandas
+scipy
+psycopg2
+brotli
+Brotli

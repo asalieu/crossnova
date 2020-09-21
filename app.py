@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 import psycopg2
 import copy
+import os
 
 
 ## define custom CSS
@@ -18,22 +19,29 @@ colors = {
     'text': '#7FDBFF'
 }
 
+
 ## setting up the trigger the dash app service 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)  
 
+## Import credentials from a secured file and pass into an object 
+user=os.getenv("USERNAME"),
+password=os.getenv("PASSWORD"),
+host=os.getenv("PostgresSQL_ADDRESS"),
+port=os.getenv("PORT"),
+database=os.getenv("DATABASE")
+
+secret = {user,password,host,port,database}
 
 ## Initiate connection to postgrsql database hosted on the cloud 
 
-## IMPORTANT NOTE: I could had created a seperate file for this such as .env wherein i can pass the login credentials 
-## and access it using the process.env method but just to keep it clean,easy to access by reader/examiner
-## i opted to keep all in .py file
+
  
 try:
-   connection = psycopg2.connect(user="vojcmcxwzvdrkn",
-                                  password="5f605df0eefa7870a7044273ce4ebcd6305a29bbdf648611c8e02e805610cfcb",
-                                  host="ec2-54-217-234-157.eu-west-1.compute.amazonaws.com",
-                                  port="5432",
-                                  database="d4qc47j8lm0le4")
+   connection = psycopg2.connect(user=secret.user,
+                                 password=secret.password,
+                                 host=secret.host,
+                                 port=secret.port,
+                                 database=secret.database)
    cursor = connection.cursor()
    postgreSQL_select_Query = "select car_purchase_price,car_sale_price,car_brand from auto"
 
